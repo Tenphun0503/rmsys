@@ -17,6 +17,12 @@ The backend system is responsible for handling requests from the frontend, proce
 
 ## Module Developing
 ### Login Module
+#### Demand Analysis
+- Function: User can log in with username and password
+- Components: Username field, password field, login button
+- Procedure: click button -> send request -> controller -> service -> mapper -> database
+#### Code Development
+#### Function Test
 
 ## Security
 
