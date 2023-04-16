@@ -27,6 +27,8 @@ and perform of OOP, AOP, and MVC concept into real world problem.
   - MyBaits-Plus
 - Build Automation Tool
   - Maven
+- Version Control Tool
+  - Git&GitHub
 
 
 ---
