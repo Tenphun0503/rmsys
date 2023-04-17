@@ -51,4 +51,16 @@ public class EmployeeController {
         // 5.2 return success result
         return R.success(emp);
     }
+
+    /**
+     * Employee logout
+     * @param request
+     * @return
+     */
+    @PostMapping("/logout")
+    public R<String> logout(HttpServletRequest request){
+        // Clean Session
+        request.getSession().removeAttribute("employee");
+        return R.success("Successfully log out");
+    }
 }

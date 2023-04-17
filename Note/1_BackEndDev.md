@@ -57,7 +57,21 @@ The backend system is responsible for handling requests from the frontend, proce
   - else: Check if employee is disabled
     - if true, return `employee disabled` result
   - else: Save employee id into session and Return `login successed` result
-#### Function Test
+
+### Logout Module
+#### Demand Analysis
+- Employee can click the logout button to log out
+- Determine Request
+  - Request URL: `http://localhost:8080/employee/logout`
+  - Request Method: POST
+- Determine Response
+  - Success: `res.code = 1`
+#### Code Development
+- Business Logic
+  - Clean info in Session
+  - return `logout successed` result
+
+###
 
 ## Security
 
