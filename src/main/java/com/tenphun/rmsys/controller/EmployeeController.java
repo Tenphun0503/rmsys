@@ -21,9 +21,6 @@ public class EmployeeController {
 
     /**
      * Employee login
-     * @param request
-     * @param employee
-     * @return
      */
     @PostMapping("/login")
     public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee){
@@ -54,8 +51,6 @@ public class EmployeeController {
 
     /**
      * Employee logout
-     * @param request
-     * @return
      */
     @PostMapping("/logout")
     public R<String> logout(HttpServletRequest request){

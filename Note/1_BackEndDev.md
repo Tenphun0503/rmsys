@@ -59,8 +59,16 @@ The backend system is responsible for handling requests from the frontend, proce
       - if true, return `employee disabled` result
     - else: Save employee id into session and Return `login successed` result
 - **Function Optimization**
-  - we can directly enter the url to bypass the login page
-  - we have to make a filter:
+  - Problem: we can directly enter the url to bypass the login page
+  - Intuition: we hope user can access system only when they log in. If invalid access detected, jump to login page.
+  - Solution: use filter or interceptor
+  - Business Logic:
+    - Define a filter: [LoginCheckFilter](../src/main/java/com/tenphun/rmsys/filter/LoginCheckFilter.java)
+    - Get Request URI and determine if it needs to be filtered
+      - if not, let it go
+    - else: Determine login status
+      - if true, let it go
+    - else: Return `no login` result based on `if (res.data.code === 0 && res.data.msg === 'NOTLOGIN')`
 
 #### 1.2 Logout Module
 - **Demand Analysis**
