@@ -89,15 +89,14 @@ The backend system is responsible for handling requests from the frontend, proce
 #### 2.1 Add new employee
 - **Demand Analysis**
   - Function: We can add employee by add employee button
-  - Components: 
-    - Given: username, name, phoneNumber, sex, idNumber
-    - Need to add: password, createUser, updateUser
   - Determine Table
     - table: employee
       - username: unique
   - Determine Request:
     - Request URI: `/employee`
     - Request Method: POST
+    - Request Payload: {username, name, phoneNumber, sex, idNumber}
+    - Need to add: password, createUser, updateUser
   - Determine Response:
     - Success `res.code = 1`
     - Failed `res.code = 0, res.msg`
@@ -114,11 +113,10 @@ The backend system is responsible for handling requests from the frontend, proce
 - **Demand Analysis**
   - Function: We can see employee information with specific rows each page
   - Determine Request:
-    - Request URI: `/employee/page`
+    - Request URI: `/employee/page?page&pageSize&name`
     - Request Method: GET
   - Determine Response:
     - Success: `res.code = 1 && res.data.records && res.data.total`
-    - Failed: 
 - **Code Development**
   - Set up MyBatis Plus Pagination Interceptor in [MyBatisPlusConfig.java](../src/main/java/com/tenphun/rmsys/config/MyBatisPlusConfig.java)
   - Create a Pagination Constructor
@@ -128,11 +126,32 @@ The backend system is responsible for handling requests from the frontend, proce
   > Here we use highly encapsulated methods provided by myBatis Plus. Page object contains `records` and `total`
 #### 2.3 Enable/Disable employee
 - **Demand Analysis**
-  - Function: 
+  - Function: Change employee status
+  - Determine Request:
+    - Request URI: `/employee`
+    - Request Method: PUT
+    - Request Payload: {id, status}
+    - Need to update: updateTime updateUser
+  - Determine Response:
+    - Success: `res.code = 1`
 - **Code Development**
+  - Convert the id obtained from the frontend from long type to string type to prevent loss of precision
+    - Create a [JacksonObjectMapper](../src/main/java/com/tenphun/rmsys/common/JacksonObjectMapper.java)
+    - In [WebMvcConfig](../src/main/java/com/tenphun/rmsys/config/WebMvcConfig.java), extend our mapper into springMvc message converters
+  - Update user info
+  - return `update success` result
 #### 2.4 Edit Employee information
 - **Demand Analysis**
+  - Function: First we have to show the current information of the employee, then we can edit the information.
+  - Update is provided above, we have to implement getById method
+  - Determine Request:
+    - Request URI: `/employee/id`
+    - Request Method: GET
+  - Determine Response:
+    - Success: return employee object
 - **Code Development**
+  - call service to get employee object by id
+  - return employee object
 
 
 ## Security

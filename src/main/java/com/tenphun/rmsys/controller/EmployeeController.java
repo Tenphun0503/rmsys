@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 
 @Slf4j
 @RestController
@@ -67,7 +69,7 @@ public class EmployeeController {
     /**
      * Employee Adding
      */
-    @PostMapping()
+    @PostMapping
     public R<String> add(HttpServletRequest request, @RequestBody Employee employee){
         // 1. set other infos
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
@@ -84,7 +86,9 @@ public class EmployeeController {
         return R.success("Successfully added");
     }
 
-
+    /**
+     * Show Employee By Page
+     */
     @GetMapping("/page")
     public R<Page<Employee>> page(int page, int pageSize, String name){
         // Create Pagination Constructor
@@ -97,5 +101,29 @@ public class EmployeeController {
         employeeService.page(pageInfo, wrapper);
 
         return R.success(pageInfo);
+    }
+
+
+    /**
+     * Edit employee information
+     */
+    @PutMapping
+    public R<String> update(HttpServletRequest request, @RequestBody Employee e){
+        // updateTime and updateUser
+        e.setUpdateTime(LocalDateTime.now());
+        e.setUpdateUser((Long) request.getSession().getAttribute("employee"));
+
+        // update user
+        employeeService.updateById(e);
+        return R.success("Successfully Changed Status");
+    }
+
+    @GetMapping("/{id}")
+    public R<Employee> getById(@PathVariable Long id){
+        Employee emp = employeeService.getById(id);
+        if(emp == null) {
+            return R.error("User not existed");
+        }
+        return R.success(emp);
     }
 }
