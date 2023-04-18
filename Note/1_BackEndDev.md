@@ -153,6 +153,10 @@ The backend system is responsible for handling requests from the frontend, proce
   - call service to get employee object by id
   - return employee object
 
+### 3. Category Module
+#### 3.1
+#### 3.2
+#### 3.3
 
 ## Security
 
