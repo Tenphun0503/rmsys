@@ -22,12 +22,12 @@ The backend system is responsible for handling requests from the frontend, proce
   - Function: Employee can log in with username and password
   - Components: Username field, password field, login button
   - Procedure: click button -> send request -> controller -> service -> mapper -> database
+  - Determine Table
+    - Related Table: employee
   - Determine Request
-    - Request URL: `http://localhost:8080/employee/login`
+    - Request URI: `/employee/login`
     - Request Method: POST
     - Request Payload: {username: "admin", password: "123456"}
-  - Determine Table
-      - Related Table: employee
   - Determine Response by analyzing frontend code
     ```
     {
@@ -74,7 +74,7 @@ The backend system is responsible for handling requests from the frontend, proce
 - **Demand Analysis**
   - Function: Employee can click the logout button to log out
   - Determine Request:
-    - Request URL: `http://localhost:8080/employee/logout`
+    - Request URI: `/employee/logout`
     - Request Method: POST
   - Determine Response
     - Success: `res.code = 1`
@@ -86,7 +86,28 @@ The backend system is responsible for handling requests from the frontend, proce
 ### 2. Employee Module
 #### 2.1 Add new employee
 - **Demand Analysis**
+  - Function: We can add employee by add employee button
+  - Components: 
+    - Given: username, name, phoneNumber, sex, idNumber
+    - Need to add: password, createUser, updateUser
+  - Determine Table
+    - table: employee
+      - username: unique
+  - Determine Request:
+    - Request URI: `/employee`
+    - Request Method: POST
+  - Determine Response:
+    - Success `res.code = 1`
+    - Failed `res.code = 0, res.msg`
 - **Code Development**
+  - ExceptionHandler
+    - [BusinessException](../src/main/java/com/tenphun/rmsys/common/BusinessException.java)
+    - [GlobalExceptionHandler](../src/main/java/com/tenphun/rmsys/common/GlobalExceptionHandler.java)
+  - Business Logic
+    - set other infos
+    - try adding to database
+      - if failed: catch exception, return `failed` result
+      - else: return `success` result
 #### 2.2 Query employee information through pagination
 - **Demand Analysis**
 - **Code Development**

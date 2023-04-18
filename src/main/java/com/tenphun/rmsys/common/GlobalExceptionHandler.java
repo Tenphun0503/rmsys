@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -21,4 +23,16 @@ public class GlobalExceptionHandler {
         log.error("[INFO] {}", e.getMessage());
         return R.error(e.getMessage());
     }
+
+    /*
+    // This method can replace the current ExceptionHandler
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public R<String> sqlExcpetionHandler(SQLIntegrityConstraintViolationException e){
+        if(e.getMessage().contains("Duplicate entry")){
+            String[] split = e.getMessage().split(" ");
+            String msg = split[2] + " already existed";
+            return R.error(msg);
+        }
+        return R.error("Undefined Exception");
+    }*/
 }

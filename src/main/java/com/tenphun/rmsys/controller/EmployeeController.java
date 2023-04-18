@@ -2,6 +2,7 @@ package com.tenphun.rmsys.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.tenphun.rmsys.common.BusinessException;
 import com.tenphun.rmsys.common.R;
 import com.tenphun.rmsys.entity.Employee;
 import com.tenphun.rmsys.service.EmployeeService;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
+
 
 @Slf4j
 @RestController
@@ -57,5 +59,26 @@ public class EmployeeController {
         // Clean Session
         request.getSession().removeAttribute("employee");
         return R.success("Successfully log out");
+    }
+
+
+    /**
+     * Employee Adding
+     */
+    @PostMapping()
+    public R<String> add(HttpServletRequest request, @RequestBody Employee employee){
+        // 1. set other infos
+        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+        Long empId = (Long) request.getSession().getAttribute("employee");
+        employee.setCreateUser(empId);
+        employee.setUpdateUser(empId);
+
+        // 2. add to database
+        try {employeeService.save(employee);}
+        catch (Exception e){
+            throw new BusinessException("Username Existed");
+        }
+        log.info("[INFO] Successfully add employee into database");
+        return R.success("Successfully added");
     }
 }

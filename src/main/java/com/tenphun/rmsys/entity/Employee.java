@@ -19,7 +19,7 @@ public class Employee implements Serializable {
     private String username;
     private String password;
     private String phone;
-    private String gender;
+    private String sex;
     private String idNumber;
     private Integer status;
     private LocalDateTime createTime;
