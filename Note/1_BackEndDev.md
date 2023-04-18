@@ -62,13 +62,15 @@ The backend system is responsible for handling requests from the frontend, proce
   - Problem: we can directly enter the url to bypass the login page
   - Intuition: we hope user can access system only when they log in. If invalid access detected, jump to login page.
   - Solution: use filter or interceptor
+  - FrontEnd has an interceptor:
+    - Determine Response: `res.data.code === 0 & res.data.msg === 'NOTLOGIN`
   - Business Logic:
     - Define a filter: [LoginCheckFilter](../src/main/java/com/tenphun/rmsys/filter/LoginCheckFilter.java)
     - Get Request URI and determine if it needs to be filtered
       - if not, let it go
     - else: Determine login status
       - if true, let it go
-    - else: Return `no login` result based on `if (res.data.code === 0 && res.data.msg === 'NOTLOGIN')`
+    - else: Return `no login` result stream
 
 #### 1.2 Logout Module
 - **Demand Analysis**
@@ -110,9 +112,23 @@ The backend system is responsible for handling requests from the frontend, proce
       - else: return `success` result
 #### 2.2 Query employee information through pagination
 - **Demand Analysis**
+  - Function: We can see employee information with specific rows each page
+  - Determine Request:
+    - Request URI: `/employee/page`
+    - Request Method: GET
+  - Determine Response:
+    - Success: `res.code = 1 && res.data.records && res.data.total`
+    - Failed: 
 - **Code Development**
+  - Set up MyBatis Plus Pagination Interceptor in [MyBatisPlusConfig.java](../src/main/java/com/tenphun/rmsys/config/MyBatisPlusConfig.java)
+  - Create a Pagination Constructor
+  - Create a Condition Constructor
+  - Query user through pagination and condition
+  - return Page object
+  > Here we use highly encapsulated methods provided by myBatis Plus. Page object contains `records` and `total`
 #### 2.3 Enable/Disable employee
 - **Demand Analysis**
+  - Function: 
 - **Code Development**
 #### 2.4 Edit Employee information
 - **Demand Analysis**

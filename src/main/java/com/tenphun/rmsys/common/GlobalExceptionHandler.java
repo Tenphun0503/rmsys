@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
     /*
     // This method can replace the current ExceptionHandler
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public R<String> sqlExcpetionHandler(SQLIntegrityConstraintViolationException e){
+    public R<String> sqlExceptionHandler(SQLIntegrityConstraintViolationException e){
         if(e.getMessage().contains("Duplicate entry")){
             String[] split = e.getMessage().split(" ");
             String msg = split[2] + " already existed";

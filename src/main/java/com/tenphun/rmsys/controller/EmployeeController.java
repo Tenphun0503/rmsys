@@ -2,6 +2,8 @@ package com.tenphun.rmsys.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tenphun.rmsys.common.BusinessException;
 import com.tenphun.rmsys.common.R;
 import com.tenphun.rmsys.entity.Employee;
@@ -80,5 +82,20 @@ public class EmployeeController {
         }
         log.info("[INFO] Successfully add employee into database");
         return R.success("Successfully added");
+    }
+
+
+    @GetMapping("/page")
+    public R<Page<Employee>> page(int page, int pageSize, String name){
+        // Create Pagination Constructor
+        Page<Employee> pageInfo = new Page<>(page,pageSize);
+
+        // Create Condition Constructor
+        LambdaQueryWrapper<Employee> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(StringUtils.isNotEmpty(name), Employee::getName, name);
+        wrapper.orderByDesc(Employee::getUpdateTime);
+        employeeService.page(pageInfo, wrapper);
+
+        return R.success(pageInfo);
     }
 }
