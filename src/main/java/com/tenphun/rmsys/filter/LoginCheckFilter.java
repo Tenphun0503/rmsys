@@ -35,7 +35,6 @@ public class LoginCheckFilter implements Filter {
         // 2. determine if uri in the ignored list
         // if not, let it go
         if(check(requestURI)){
-            log.info("[INFO] Request {} was ignored", requestURI);
             filterChain.doFilter(request, response);
             return;
         }
@@ -44,15 +43,13 @@ public class LoginCheckFilter implements Filter {
         // if not null, let it go
         Long empId = (Long) request.getSession().getAttribute("employee");
         if(empId!=null){
-            log.info("[INFO] Request {} passed login status check", requestURI);
-            log.info("[INFO] User Login, user id: {}", empId);
+            log.info("[INFO] current user id: {}", empId);
             BaseContext.setCurrentId(empId);
             filterChain.doFilter(request, response);
             return;
         }
 
         // 4. return no login
-        log.info("[INFO] Request {} was refused", requestURI);
         response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));
     }
 

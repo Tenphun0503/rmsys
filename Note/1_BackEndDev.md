@@ -163,9 +163,45 @@ The backend system is responsible for handling requests from the frontend, proce
     - Set a tool class to get and save user: [BaseContext](../src/main/java/com/tenphun/rmsys/common/BaseContext.java)
 
 ### 3. Category Module
-#### 3.1
-#### 3.2
-#### 3.3
+#### 3.1 Show Page
+- **Demand Analysis**
+  - Function: Present category through pagination
+  - Request URI: `/category/page/page&pageSize`
+  - Request Method: GET
+  - Respond: {code, data{records,total}}
+- **Code Development**
+  - Create Pagination Constructor
+  - Create Condition Constructor (sort by sort column)
+  - return results
+#### 3.2 Add Category
+- **Demand Analysis**
+  - Function: Add category 
+  - Request URI: `/category`
+  - Request Method: POST
+  - Request Payload: {name, type, sort}
+- **Code Development**
+  - get object data
+  - add into database
+    - if success, return success
+    - if exception occurs, return message
+#### 3.3 Edit Category
+- **Demand Analysis**
+  - Function: Edit Category
+  - Request URI: `/category`
+  - Request Method: PUT
+  - Request Payload: {id, name, sort}
+- **Code Development**
+  - call updateById
+  - return success
+#### 3.4 Delete Category
+- **Demand Analysis**
+  - Function: Delete Category
+  - Request URI: `/category`
+  - Request Method: DELETE
+  - Request Payload: {id}
+- **Code Development**
+  - call removeById
+  - return success
 
 ## Security
 
