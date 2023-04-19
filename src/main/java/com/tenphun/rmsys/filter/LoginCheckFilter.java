@@ -1,6 +1,7 @@
 package com.tenphun.rmsys.filter;
 
 import com.alibaba.fastjson2.JSON;
+import com.tenphun.rmsys.common.BaseContext;
 import com.tenphun.rmsys.common.R;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -41,9 +42,11 @@ public class LoginCheckFilter implements Filter {
 
         // 2. determine login status
         // if not null, let it go
-        if(request.getSession().getAttribute("employee")!=null){
+        Long empId = (Long) request.getSession().getAttribute("employee");
+        if(empId!=null){
             log.info("[INFO] Request {} passed login status check", requestURI);
-            log.info("[INFO] User Login, user id: {}", request.getSession().getAttribute("employee"));
+            log.info("[INFO] User Login, user id: {}", empId);
+            BaseContext.setCurrentId(empId);
             filterChain.doFilter(request, response);
             return;
         }

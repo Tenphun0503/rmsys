@@ -158,7 +158,9 @@ The backend system is responsible for handling requests from the frontend, proce
 - Business Logic: 
   - Use `@TableField` annotation on attributes
   - Configure a [MetaObjectHandler](../src/main/java/com/tenphun/rmsys/common/MyMetaObjectHandler.java)
-  - set Time and User. TODO: get user
+  - For time, we can directly set updateTime and createTime
+  - For user, we have to use ThreadLocal to save the user from other place like filter
+    - Set a tool class to get and save user: [BaseContext](../src/main/java/com/tenphun/rmsys/common/BaseContext.java)
 
 ### 3. Category Module
 #### 3.1
@@ -170,5 +172,11 @@ The backend system is responsible for handling requests from the frontend, proce
 ## Testing
 
 ## Conclusion
+Perk
 - used lombok to print log in case of better maintenance
 - Wrote detailed development documentation
+Problem-Solution
+- 19 length long data loss precision when it is sent to frontend
+  - Use a self-defined objectMapper and put it into spring mvc message converters.
+- Trying to use metaObjectHandler to autofill filed like createUser createTime, but it doesn't provide way to get current session
+  - Use ThreadLocal to save current user of the session since each transaction(doFilter->update->updateFill) is happened in one thread
