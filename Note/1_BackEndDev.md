@@ -152,6 +152,13 @@ The backend system is responsible for handling requests from the frontend, proce
 - **Code Development**
   - call service to get employee object by id
   - return employee object
+#### 2.5 Module Optimization
+- Problem: When we edit or insert a data, we have to manually set createTime, creatUser etc.
+- Solution: Use automatic filling of common fields provided by myBaits-Plus
+- Business Logic: 
+  - Use `@TableField` annotation on attributes
+  - Configure a [MetaObjectHandler](../src/main/java/com/tenphun/rmsys/common/MyMetaObjectHandler.java)
+  - set Time and User. TODO: get user
 
 ### 3. Category Module
 #### 3.1

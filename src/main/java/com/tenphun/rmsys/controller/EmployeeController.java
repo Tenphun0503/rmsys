@@ -73,9 +73,6 @@ public class EmployeeController {
     public R<String> add(HttpServletRequest request, @RequestBody Employee employee){
         // 1. set other infos
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-        Long empId = (Long) request.getSession().getAttribute("employee");
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
 
         // 2. add to database
         try {employeeService.save(employee);}
@@ -109,10 +106,6 @@ public class EmployeeController {
      */
     @PutMapping
     public R<String> update(HttpServletRequest request, @RequestBody Employee e){
-        // updateTime and updateUser
-        e.setUpdateTime(LocalDateTime.now());
-        e.setUpdateUser((Long) request.getSession().getAttribute("employee"));
-
         // update user
         employeeService.updateById(e);
         return R.success("Successfully Changed Status");
