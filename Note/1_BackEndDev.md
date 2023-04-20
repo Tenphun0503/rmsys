@@ -96,7 +96,7 @@ The backend system is responsible for handling requests from the frontend, proce
     - Request URI: `/employee`
     - Request Method: POST
     - Request Payload: {username, name, phoneNumber, sex, idNumber}
-    - Need to add: password, createUser, updateUser
+    - Need to add: password
   - Determine Response:
     - Success `res.code = 1`
     - Failed `res.code = 0, res.msg`
@@ -195,13 +195,67 @@ The backend system is responsible for handling requests from the frontend, proce
   - return success
 #### 3.4 Delete Category
 - **Demand Analysis**
-  - Function: Delete Category
+  - Function: Delete Category, but will fail when the category related to a dish or set.
   - Request URI: `/category`
   - Request Method: DELETE
   - Request Payload: {id}
 - **Code Development**
-  - call removeById
+  - For checking Setmeal or Dish relevant relation, we have to first setup Setmeal and Dish module
+  - write a self-defined remove method in [CategoryServiceImpl](../src/main/java/com/tenphun/rmsys/service/impl/CategoryServiceImpl.java)
+    - check if category is associated with any of the Dish table
+      - if there are, throw Exception
+    - check if category is associated with any of the Setmeal table
+      - if there are, throw Exception
+    - call removeById
   - return success
+
+### 4. Dish Module
+#### 4.0 File Upload and Download
+- **Demand Analysis**
+  - Function: Allow user to upload and download files, such as image
+  - Solution: We can use **MultipartFile** given by Spring-web
+  - Request URI: `/common/upload` `/common/download`
+  - Request Method: POST (File must use post)
+- **Code Development**
+  - in [CommonController](../src/main/java/com/tenphun/rmsys/controller/CommonController.java), set `MultipartFile` as para
+  - in upload method, we can save file to specified path (we can configure direction in application.yml)
+  - in download method, we have to write file content back to the frontend
+#### 4.1 Show Page
+- **Demand Analysis**
+  - Function: Show dishes through pagination
+  - Request URI: `/setmeal/page`
+  - Request Method: GET
+  - Request Payload: {page, pageSize, [name]}
+  - Request Respond: {code, {records, total}}
+- **Code Development**
+#### 4.2 Add Category
+- **Demand Analysis**
+- **Code Development**
+#### 4.3 Edit Category
+- **Demand Analysis**
+- **Code Development**
+#### 4.4 Delete Category
+- **Demand Analysis**
+- **Code Development**
+
+### 5. Dish Module
+#### 5.1 Show Page
+- **Demand Analysis**
+  - Function: Show set meals through pagination
+  - Request URI: `/setmeal/page`
+  - Request Method: GET
+  - Request Payload: {page, pageSize, [name]}
+  - Request Respond: {code, {records, total}}
+- **Code Development**
+#### 5.2 Add Category
+- **Demand Analysis**
+- **Code Development**
+#### 5.3 Edit Category
+- **Demand Analysis**
+- **Code Development**
+#### 5.4 Delete Category
+- **Demand Analysis**
+- **Code Development**
 
 ## Security
 
@@ -213,6 +267,6 @@ Perk
 - Wrote detailed development documentation
 Problem-Solution
 - 19 length long data loss precision when it is sent to frontend
-  - Use a self-defined objectMapper and put it into spring mvc message converters.
-- Trying to use metaObjectHandler to autofill filed like createUser createTime, but it doesn't provide way to get current session
-  - Use ThreadLocal to save current user of the session since each transaction(doFilter->update->updateFill) is happened in one thread
+  - Use a self-defined **objectMapper** and put it into spring mvc message converters.
+- Trying to use **metaObjectHandler** to autofill filed like createUser createTime, but it doesn't provide way to get current session
+  - Use **ThreadLocal** to save current user of the session since each transaction(doFilter->update->updateFill) is happened in one thread

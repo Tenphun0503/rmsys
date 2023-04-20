@@ -36,3 +36,4 @@ build/
 temp/
 **/backend/
 **/front/
+**/common/
