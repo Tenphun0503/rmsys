@@ -62,7 +62,7 @@ public class CategoryController {
      */
     @DeleteMapping
     public R<String> delete(Long id){
-        categoryService.removeById(id);
+        categoryService.remove(id);
         return R.success("Delete 1");
     }
 }
