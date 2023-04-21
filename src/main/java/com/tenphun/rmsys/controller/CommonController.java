@@ -33,17 +33,20 @@ public class CommonController {
         // Use UUID to generate a new name
         String fileName = UUID.randomUUID().toString() + suffix;
 
+        System.out.println(basePath+fileName);
         // create a File and create if it doesn't exist
         File dir = new File(basePath);
         if(!dir.exists()){
             dir.mkdirs();
         }
 
+        // write into directory
         try {
-            file.transferTo(new File(basePath + fileName));
+            file.transferTo(new File(basePath+fileName));
         } catch (IOException e) {
-            throw new BusinessException("Upload Failed, Try Again");
+            throw new RuntimeException(e);
         }
+        System.out.println("1111");
         return R.success(fileName);
     }
 
@@ -51,7 +54,7 @@ public class CommonController {
     public void download(String name, HttpServletResponse response){
         try {
             // input steam, read file content
-            FileInputStream input = new FileInputStream(new File(basePath+name));
+            FileInputStream input = new FileInputStream(new File(basePath, name));
             // output stream, write back to frontend
             ServletOutputStream output = response.getOutputStream();
             response.setContentType("image/jpeg");

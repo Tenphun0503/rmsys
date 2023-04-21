@@ -223,18 +223,39 @@ The backend system is responsible for handling requests from the frontend, proce
 #### 4.1 Show Page
 - **Demand Analysis**
   - Function: Show dishes through pagination
-  - Request URI: `/setmeal/page`
+  - Request URI: `/dish/page`
   - Request Method: GET
   - Request Payload: {page, pageSize, [name]}
   - Request Respond: {code, {records, total}}
 - **Code Development**
-#### 4.2 Add Category
+#### 4.2 Add Dish
+- **Demand Analysis**
+  - Function: Add a new dish upon given data.
+  - Related Table: dish_flavor
+  - Show Category list
+    - Request URI: `category/list?type`
+    - Request Method: GET
+    - Respond: List<Category>
+  - Image upload and download
+  - Save dish
+    - Request URI: `/dish`
+    - Request Method: POST
+    - Request Payload: {categoryId, code, description, flavors, image, name, price, status}
+- **Code Development**
+  - Set up DishFlavor entity, mapper, service interface and implementation
+  - Add a getByType method in CategoryController
+  - Save dish into dish table, save flavors into flavors table
+    - Since frontend sent data different from our existed entity, so we have to create a new model [DishDto]()
+      - Data Transfer Object (DTO) used for data transfer between presentation layer and business layer
+    - Add self-defined service method in DishServiceImpl
+      - save dish into dish table
+      - get dish id
+      - set flavors dishId
+      - save flavors into flavor table
+#### 4.3 Edit Dish
 - **Demand Analysis**
 - **Code Development**
-#### 4.3 Edit Category
-- **Demand Analysis**
-- **Code Development**
-#### 4.4 Delete Category
+#### 4.4 Delete Dish
 - **Demand Analysis**
 - **Code Development**
 

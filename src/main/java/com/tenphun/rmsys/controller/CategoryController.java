@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/category")
@@ -64,5 +66,21 @@ public class CategoryController {
     public R<String> delete(Long id){
         categoryService.remove(id);
         return R.success("Delete 1");
+    }
+
+    /**
+     * Get list of Category by condition
+     */
+    @GetMapping("/list")
+    public R<List<Category>> list(Category category){
+        // Condition wrapper
+        LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<>();
+        // Add condition
+        wrapper.eq(category.getType()!=null, Category::getType, category.getType());
+        // Add sort condition
+        wrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
+
+        List<Category> list = categoryService.list(wrapper);
+        return R.success(list);
     }
 }
