@@ -220,15 +220,7 @@ The backend system is responsible for handling requests from the frontend, proce
   - in [CommonController](../src/main/java/com/tenphun/rmsys/controller/CommonController.java), set `MultipartFile` as para
   - in upload method, we can save file to specified path (we can configure direction in application.yml)
   - in download method, we have to write file content back to the frontend
-#### 4.1 Show Page
-- **Demand Analysis**
-  - Function: Show dishes through pagination
-  - Request URI: `/dish/page`
-  - Request Method: GET
-  - Request Payload: {page, pageSize, [name]}
-  - Request Respond: {code, {records, total}}
-- **Code Development**
-#### 4.2 Add Dish
+#### 4.1 Add Dish
 - **Demand Analysis**
   - Function: Add a new dish upon given data.
   - Related Table: dish_flavor
@@ -244,22 +236,67 @@ The backend system is responsible for handling requests from the frontend, proce
 - **Code Development**
   - Set up DishFlavor entity, mapper, service interface and implementation
   - Add a getByType method in CategoryController
-  - Save dish into dish table, save flavors into flavors table
-    - Since frontend sent data different from our existed entity, so we have to create a new model [DishDto]()
+  - Save dish into dish table, save flavors into dish_flavor table
+    - Since frontend sent data different from our existed entity, so we have to create a new model [DishDto](../src/main/java/com/tenphun/rmsys/dto/DishDto.java)
       - Data Transfer Object (DTO) used for data transfer between presentation layer and business layer
-    - Add self-defined service method in DishServiceImpl
+    - Add self-defined service method in [DishServiceImpl](../src/main/java/com/tenphun/rmsys/service/impl/DishServiceImpl.java)
       - save dish into dish table
       - get dish id
       - set flavors dishId
-      - save flavors into flavor table
+      - save flavors into dish_flavor table
+#### 4.2 Show Page
+- **Demand Analysis**
+  - Function: Show dishes through pagination
+  - Request URI: `/dish/page`
+  - Request Method: GET
+  - Request Payload: {page, pageSize, [name]}
+  - Response: {code, {records, total}}
+  - Special Request:
+    - Need to present image (use `/common/download`)
+    - Need to present name of the category (use `DishDto`)
+- **Code Development**
+  - Business Logic:
+    - Like before, get Page<Dish> object of dishes
+    - Create a Page<DishDto> object
+      - only difference between them should be `categoryName` in `records`
+      - copy all other data from Page<Dish> object into Page<DishDto> object
+      - use `categoryId` query name of the category and set into `categoryName`
+      - return Page<DishDto> object
 #### 4.3 Edit Dish
 - **Demand Analysis**
+  - Function: Present the existed information and allow modification
+  - Present the information
+    - Request URI: `/dish/{id}`
+    - Request Method: GET
+    - Response: DishDto
+  - Update with given info
+    - Request URI: `/dish`
+    - Request Method: PUT
+    - Request PayLoad: {DishDto}
 - **Code Development**
+  - getById method
+    - Get dish by id from dish table
+    - Get flavorList by dishId=id from dish_flavor table
+    - create a DishDto object and set its attribute from dish and flavorList
+    - return DishDto object
+  - Update method
+    - Update dish table
+    - clean all current flavors
+    - save new flavors
+      - set dishId (new flavor records don't have that)
+  - Return success
 #### 4.4 Delete Dish
 - **Demand Analysis**
+  - Function: Delete Dish or Selected Dishes
+  - Request URI: `/dish/{ids}`
+  - Request Method: DELETE
 - **Code Development**
+  - iterate the ids
+    - remove from dish table by id
+    - remove from flavors table where dishId=id
+    - TODO: remove image
 
-### 5. Dish Module
+### 5. Setmeal Module
 #### 5.1 Show Page
 - **Demand Analysis**
   - Function: Show set meals through pagination

@@ -70,7 +70,7 @@ public class EmployeeController {
      * Employee Adding
      */
     @PostMapping
-    public R<String> add(HttpServletRequest request, @RequestBody Employee employee){
+    public R<String> add(@RequestBody Employee employee){
         // 1. set other infos
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
 
@@ -105,7 +105,7 @@ public class EmployeeController {
      * Edit employee information
      */
     @PutMapping
-    public R<String> update(HttpServletRequest request, @RequestBody Employee e){
+    public R<String> update(@RequestBody Employee e){
         // update user
         employeeService.updateById(e);
         return R.success("Successfully Changed Status");
