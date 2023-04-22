@@ -73,7 +73,7 @@ public class SetmealController {
     }
 
     @DeleteMapping
-    public R<String> delete(List<Long> ids){
+    public R<String> delete(@RequestParam List<Long> ids){
         setmealService.deleteWithDishes(ids);
         return R.success("delete 1");
     }

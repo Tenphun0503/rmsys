@@ -88,7 +88,7 @@ public class DishController {
      * delete dish
      */
     @DeleteMapping
-    public R<String> delete(List<Long> ids){
+    public R<String> delete(@RequestParam List<Long> ids){
         dishService.deleteWithFlavor(ids);
         return R.success("delete 1");
     }
