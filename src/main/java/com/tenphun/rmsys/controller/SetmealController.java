@@ -35,7 +35,7 @@ public class SetmealController {
     }
 
     @GetMapping("/page")
-    public R<Page<SetmealDto>> page(int page, int pageSize, String name){
+    public R<Page<SetmealDto>> getByPage(int page, int pageSize, String name){
         // Create a pagination object
         Page<Setmeal> setmealPage = new Page<>(page, pageSize);
         // Set condition
@@ -59,6 +59,30 @@ public class SetmealController {
         });
         setmealDtoPage.setRecords(dtoList);
         return R.success(setmealDtoPage);
+    }
+
+    @GetMapping("/{id}")
+    public R<SetmealDto> getById(@PathVariable Long id){
+        SetmealDto dto = setmealService.getByIdWithDishes(id);
+        return R.success(dto);
+    }
+
+    @PutMapping
+    public R<String> update(@RequestBody SetmealDto dto){
+        setmealService.updateWithDishes(dto);
+        return R.success("Update 1");
+    }
+
+    @DeleteMapping
+    public R<String> delete(Long[] ids){
+        setmealService.deleteWithDishes(ids);
+        return R.success("delete 1");
+    }
+
+    @PostMapping("/status/{status}")
+    public R<String> updateStatus(Long[] ids, @PathVariable Integer status){
+        setmealService.updateStatus(ids, status);
+        return R.success("update status 1");
     }
 
 

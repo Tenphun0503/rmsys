@@ -8,4 +8,8 @@ import com.tenphun.rmsys.entity.SetmealDish;
 
 public interface SetmealService extends IService<Setmeal> {
     void addWithDishes(SetmealDto setmealDto);
+    SetmealDto getByIdWithDishes(Long id);
+    void updateWithDishes(SetmealDto dto);
+    void deleteWithDishes(Long[] ids);
+    void updateStatus(Long[] ids, Integer status);
 }

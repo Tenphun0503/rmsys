@@ -328,10 +328,25 @@ The backend system is responsible for handling requests from the frontend, proce
   - return SetmealDto Pagination object
 #### 5.3 Edit Set
 - **Demand Analysis**
+  - Function: Modify the information of the Set
+  - Present existed information
+    - Request URI: `/setmeal/{id}`
+    - Request Method: GET
+    - Response: {SetmealDto}
+  - Update information
+    - Request URI: `/setmeal`
+    - Request Method: PUT
+    - Request Payload {SetmealDto}
 - **Code Development**
-#### 5.4 Delete Set
-- **Demand Analysis**
-- **Code Development**
+  - Present existed information
+    - query information from setmeal table by id
+    - query dishes information from setmeal_dish table by setmealId=id
+    - combine queried information in to a SetmealDto object
+    - return SetmealDto object
+  - Update information
+    - update data in setmeal table by id
+    - clean existed data in setmeal_dish table of setmealId=id
+    - set setmealId=id for the new data and add them into setmeal_dish table
 
 ## Security
 
