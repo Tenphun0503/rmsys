@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -72,23 +72,21 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
     @Override
     public void deleteWithFlavor(Long[] ids) {
-        for (Long id : ids) {
-            // remove from dish table
-            this.removeById(id);
-            // remove flavors
-            LambdaQueryWrapper<DishFlavor> wrapper = new LambdaQueryWrapper<>();
-            wrapper.eq(DishFlavor::getDishId, id);
-            dishFlavorService.remove(wrapper);
-        }
+        // batch delete with the given ids
+        this.removeByIds(Arrays.asList(ids));
+
+        // delete setmealDish with a matching setmealId
+        LambdaQueryWrapper<DishFlavor> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(DishFlavor::getDishId, Arrays.asList(ids));
+        dishFlavorService.remove(wrapper);
     }
 
     @Override
     public void updateStatus(Long[] ids, Integer status) {
-        for(Long id : ids){
-            Dish dish = new Dish();
-            dish.setId(id);
-            dish.setStatus(status);
-            this.updateById(dish);
-        }
+        Dish dish = new Dish();
+        dish.setStatus(status);
+        LambdaQueryWrapper<Dish> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(Dish::getId, Arrays.asList(ids));
+        this.update(dish, wrapper);
     }
 }
