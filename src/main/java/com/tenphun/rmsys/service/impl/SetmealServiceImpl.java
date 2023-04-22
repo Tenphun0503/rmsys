@@ -2,7 +2,9 @@ package com.tenphun.rmsys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tenphun.rmsys.common.BusinessException;
 import com.tenphun.rmsys.dto.SetmealDto;
+import com.tenphun.rmsys.entity.Dish;
 import com.tenphun.rmsys.entity.Setmeal;
 import com.tenphun.rmsys.entity.SetmealDish;
 import com.tenphun.rmsys.mapper.SetmealMapper;
@@ -74,6 +76,15 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 
     @Override
     public void deleteWithDishes(List<Long> ids) {
+        LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(Setmeal::getId, ids);
+        queryWrapper.eq(Setmeal::getStatus, 1);
+
+        if(this.count(queryWrapper) > 0){
+            throw new BusinessException("Selected Sets have on sale items.");
+        }
+
+
         // batch delete setmeal with the given ids
         this.removeByIds(ids);
 

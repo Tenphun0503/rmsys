@@ -2,6 +2,7 @@ package com.tenphun.rmsys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tenphun.rmsys.common.BusinessException;
 import com.tenphun.rmsys.dto.DishDto;
 import com.tenphun.rmsys.entity.Dish;
 import com.tenphun.rmsys.entity.DishFlavor;
@@ -72,6 +73,15 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
     @Override
     public void deleteWithFlavor(List<Long> ids) {
+        // check status, if there are on sale dishes, throw exception
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(Dish::getId, ids);
+        queryWrapper.eq(Dish::getStatus, 1);
+
+        if(this.count(queryWrapper) > 0){
+            throw new BusinessException("Selected Dishes have on sale items.");
+        }
+
         // batch delete with the given ids
         this.removeByIds(ids);
 
