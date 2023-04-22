@@ -36,7 +36,11 @@ and perform of OOP, AOP, and MVC concept into real world problem.
 1. DataBase Building
 2. FrontEnd Template
 3. BackEnd Development
-View all development records: [BackEndDev.md](Note/1_BackEndDev.md)
+   - View all development records: [BackEndDev.md](Note/1_BackEndDev.md)
 4. MobileEnd Development
-View all developmetn records: [MobileEndDev.md](Note/2_MobileEndDev.md)
+   - View all development records: [MobileEndDev.md](Note/2_MobileEndDev.md)
+
+---
+## Project Deployment
+1. [Linux](Note/3_Linux.md)
 
