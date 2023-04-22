@@ -247,9 +247,8 @@ The backend system is responsible for handling requests from the frontend, proce
 #### 4.2 Show Page
 - **Demand Analysis**
   - Function: Show dishes through pagination
-  - Request URI: `/dish/page`
+  - Request URI: `/dish/page?page&pageSize&[name]`
   - Request Method: GET
-  - Request Payload: {page, pageSize, [name]}
   - Response: {code, {records, total}}
   - Special Request:
     - Need to present image (use `/common/download`)
@@ -308,7 +307,7 @@ The backend system is responsible for handling requests from the frontend, proce
   - Save Set
     - Request URI: `/setmeal`
     - Request Method: POST
-    - Request Payload: {Setmeal, List<SetmealDish>}
+    - Request Payload: {SetmealDto{Setmeal, setmealDishes}}
 - **Code Development**
   - Show Dishes by CategoryId
   - Save The Set
@@ -318,11 +317,15 @@ The backend system is responsible for handling requests from the frontend, proce
 #### 5.2 Show Page
 - **Demand Analysis**
   - Function: Show set meals through pagination
-  - Request URI: `/setmeal/page`
+  - Request URI: `/setmeal/page?page&pageSize&[name]`
   - Request Method: GET
-  - Request Payload: {page, pageSize, [name]}
-  - Request Respond: {code, {records, total}}
+  - Request Respond: {SetmealDto{Setmeal, categoryName}}
 - **Code Development**
+  - Create a Setmeal Pagination object and query data from setmeal table
+  - Create a SetmealDto Pagination object and modify its records
+    - use `categroyId` look for `categoryName` from category table
+    - copy other properties from Setmeal Pagination object
+  - return SetmealDto Pagination object
 #### 5.3 Edit Set
 - **Demand Analysis**
 - **Code Development**
