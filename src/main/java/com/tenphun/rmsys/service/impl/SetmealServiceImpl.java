@@ -73,23 +73,23 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
     }
 
     @Override
-    public void deleteWithDishes(Long[] ids) {
+    public void deleteWithDishes(List<Long> ids) {
         // batch delete setmeal with the given ids
-        this.removeByIds(Arrays.asList(ids));
+        this.removeByIds(ids);
 
         // delete setmealDish with a matching setmealId
         LambdaQueryWrapper<SetmealDish> wrapper = new LambdaQueryWrapper<>();
-        wrapper.in(SetmealDish::getSetmealId, Arrays.asList(ids));
+        wrapper.in(SetmealDish::getSetmealId, ids);
         setmealDishService.remove(wrapper);
     }
 
     @Override
-    public void updateStatus(Long[] ids, Integer status) {
+    public void updateStatus(List<Long> ids, Integer status) {
         Setmeal setmeal = new Setmeal();
         setmeal.setStatus(status);
         // Create a wrapper for batch updating
         LambdaQueryWrapper<Setmeal> wrapper = new LambdaQueryWrapper<>();
-        wrapper.in(Setmeal::getId, Arrays.asList(ids));
+        wrapper.in(Setmeal::getId, ids);
         // update records with the updated status
         this.update(setmeal, wrapper);
     }

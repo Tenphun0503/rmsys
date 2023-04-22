@@ -2,7 +2,6 @@ package com.tenphun.rmsys.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tenphun.rmsys.common.R;
@@ -74,13 +73,13 @@ public class SetmealController {
     }
 
     @DeleteMapping
-    public R<String> delete(Long[] ids){
+    public R<String> delete(List<Long> ids){
         setmealService.deleteWithDishes(ids);
         return R.success("delete 1");
     }
 
     @PostMapping("/status/{status}")
-    public R<String> updateStatus(Long[] ids, @PathVariable Integer status){
+    public R<String> updateStatus(List<Long> ids, @PathVariable Integer status){
         setmealService.updateStatus(ids, status);
         return R.success("update status 1");
     }

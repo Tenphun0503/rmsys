@@ -71,22 +71,22 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
     }
 
     @Override
-    public void deleteWithFlavor(Long[] ids) {
+    public void deleteWithFlavor(List<Long> ids) {
         // batch delete with the given ids
-        this.removeByIds(Arrays.asList(ids));
+        this.removeByIds(ids);
 
         // delete setmealDish with a matching setmealId
         LambdaQueryWrapper<DishFlavor> wrapper = new LambdaQueryWrapper<>();
-        wrapper.in(DishFlavor::getDishId, Arrays.asList(ids));
+        wrapper.in(DishFlavor::getDishId, ids);
         dishFlavorService.remove(wrapper);
     }
 
     @Override
-    public void updateStatus(Long[] ids, Integer status) {
+    public void updateStatus(List<Long> ids, Integer status) {
         Dish dish = new Dish();
         dish.setStatus(status);
         LambdaQueryWrapper<Dish> wrapper = new LambdaQueryWrapper<>();
-        wrapper.in(Dish::getId, Arrays.asList(ids));
+        wrapper.in(Dish::getId, ids);
         this.update(dish, wrapper);
     }
 }

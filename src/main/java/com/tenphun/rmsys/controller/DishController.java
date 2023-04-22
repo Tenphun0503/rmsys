@@ -7,7 +7,6 @@ import com.tenphun.rmsys.common.R;
 import com.tenphun.rmsys.dto.DishDto;
 import com.tenphun.rmsys.entity.Dish;
 import com.tenphun.rmsys.service.CategoryService;
-import com.tenphun.rmsys.service.DishFlavorService;
 import com.tenphun.rmsys.service.DishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -24,8 +23,6 @@ public class DishController {
 
     @Autowired
     DishService dishService;
-    @Autowired
-    DishFlavorService dishFlavorService;
     @Autowired
     CategoryService categoryService;
 
@@ -91,22 +88,24 @@ public class DishController {
      * delete dish
      */
     @DeleteMapping
-    public R<String> delete(Long[] ids){
+    public R<String> delete(List<Long> ids){
         dishService.deleteWithFlavor(ids);
         return R.success("delete 1");
     }
 
     @PostMapping("/status/{status}")
-    public R<String> updateStatus(Long[] ids, @PathVariable Integer status){
+    public R<String> updateStatus(List<Long> ids, @PathVariable Integer status){
         dishService.updateStatus(ids, status);
         return R.success("onSale 1");
     }
 
     @GetMapping("/list")
     public R<List<Dish>> getByList(Dish dish){
-        LambdaQueryWrapper<Dish> wrapper = new LambdaQueryWrapper();
+        LambdaQueryWrapper<Dish> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(dish.getCategoryId()!=null, Dish::getCategoryId, dish.getCategoryId());
+        wrapper.eq(Dish::getStatus, 1);
         wrapper.like(StringUtils.isNotEmpty(dish.getName()), Dish::getName, dish.getName());
+        wrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
         List<Dish> list = dishService.list(wrapper);
         return R.success(list);
     }
