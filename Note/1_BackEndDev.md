@@ -297,7 +297,25 @@ The backend system is responsible for handling requests from the frontend, proce
     - TODO: remove image
 
 ### 5. Setmeal Module
-#### 5.1 Show Page
+#### 5.1 Add Set
+- **Demand Analysis**
+  - Function: Add new meal set
+  - Show Category to choose
+  - Show Dishes to choose
+    - Request URI: `dish/list?categoryId`
+    - Request Method: GET
+    - Response: {List<Dish>}
+  - Save Set
+    - Request URI: `/setmeal`
+    - Request Method: POST
+    - Request Payload: {Setmeal, List<SetmealDish>}
+- **Code Development**
+  - Show Dishes by CategoryId
+  - Save The Set
+    - Save the setmeal info into setmeal table
+    - assign the setmealId for each dishes
+    - save the setmealDishes into setmeal_dish table
+#### 5.2 Show Page
 - **Demand Analysis**
   - Function: Show set meals through pagination
   - Request URI: `/setmeal/page`
@@ -305,13 +323,10 @@ The backend system is responsible for handling requests from the frontend, proce
   - Request Payload: {page, pageSize, [name]}
   - Request Respond: {code, {records, total}}
 - **Code Development**
-#### 5.2 Add Category
+#### 5.3 Edit Set
 - **Demand Analysis**
 - **Code Development**
-#### 5.3 Edit Category
-- **Demand Analysis**
-- **Code Development**
-#### 5.4 Delete Category
+#### 5.4 Delete Set
 - **Demand Analysis**
 - **Code Development**
 

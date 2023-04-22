@@ -33,7 +33,6 @@ public class CommonController {
         // Use UUID to generate a new name
         String fileName = UUID.randomUUID().toString() + suffix;
 
-        System.out.println(basePath+fileName);
         // create a File and create if it doesn't exist
         File dir = new File(basePath);
         if(!dir.exists()){
@@ -46,7 +45,6 @@ public class CommonController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("1111");
         return R.success(fileName);
     }
 

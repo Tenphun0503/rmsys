@@ -24,7 +24,7 @@ public class CategoryController {
      * Show Category By page
      */
     @GetMapping("/page")
-    public R<Page<Category>> page(int page, int pageSize){
+    public R<Page<Category>> getByPage(int page, int pageSize){
         Page<Category> pageInfo = new Page<>(page, pageSize);
 
         // Create Condition Constructor
@@ -72,7 +72,7 @@ public class CategoryController {
      * Get list of Category by condition
      */
     @GetMapping("/list")
-    public R<List<Category>> list(Category category){
+    public R<List<Category>> getByList(Category category){
         // Condition wrapper
         LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<>();
         // Add condition

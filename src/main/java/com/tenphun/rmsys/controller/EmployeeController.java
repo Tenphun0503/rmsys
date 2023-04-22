@@ -87,7 +87,7 @@ public class EmployeeController {
      * Show Employee By Page
      */
     @GetMapping("/page")
-    public R<Page<Employee>> page(int page, int pageSize, String name){
+    public R<Page<Employee>> getByPage(int page, int pageSize, String name){
         // Create Pagination Constructor
         Page<Employee> pageInfo = new Page<>(page,pageSize);
 

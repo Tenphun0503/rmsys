@@ -6,18 +6,26 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tenphun.rmsys.common.R;
+import com.tenphun.rmsys.dto.SetmealDto;
 import com.tenphun.rmsys.entity.Setmeal;
 import com.tenphun.rmsys.service.SetmealService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("setmeal")
 public class SetmealController {
     @Autowired
     SetmealService setmealService;
+
+
+    @PostMapping
+    public R<String> add(@RequestBody SetmealDto setmealDto){
+        setmealService.addWithDishes(setmealDto);
+        return R.success("Add 1");
+    }
 
     @GetMapping("/page")
     public R<Page<Setmeal>> page(int page, int pageSize, String name){
@@ -30,4 +38,7 @@ public class SetmealController {
         setmealService.page(pageInfo, wrapper);
         return R.success(pageInfo);
     }
+
+
+
 }

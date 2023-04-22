@@ -3,12 +3,9 @@ package com.tenphun.rmsys.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
 import com.tenphun.rmsys.common.R;
 import com.tenphun.rmsys.dto.DishDto;
 import com.tenphun.rmsys.entity.Dish;
-import com.tenphun.rmsys.entity.DishFlavor;
-import com.tenphun.rmsys.entity.Employee;
 import com.tenphun.rmsys.service.CategoryService;
 import com.tenphun.rmsys.service.DishFlavorService;
 import com.tenphun.rmsys.service.DishService;
@@ -45,7 +42,7 @@ public class DishController {
      * Show dishes through pagination
      */
     @GetMapping("/page")
-    public R<Page<DishDto>> page (int page, int pageSize, String name){
+    public R<Page<DishDto>> getByPage(int page, int pageSize, String name){
         // Pagination object
         Page<Dish> dishPage = new Page<>(page, pageSize);
         // Set Condition and get data
@@ -100,9 +97,18 @@ public class DishController {
     }
 
     @PostMapping("/status/{status}")
-    public R<String> onSale(Long[] ids, @PathVariable Integer status){
+    public R<String> updateStatus(Long[] ids, @PathVariable Integer status){
         dishService.updateStatus(ids, status);
         return R.success("onSale 1");
+    }
+
+    @GetMapping("/list")
+    public R<List<Dish>> getByList(Dish dish){
+        LambdaQueryWrapper<Dish> wrapper = new LambdaQueryWrapper();
+        wrapper.eq(dish.getCategoryId()!=null, Dish::getCategoryId, dish.getCategoryId());
+        wrapper.like(StringUtils.isNotEmpty(dish.getName()), Dish::getName, dish.getName());
+        List<Dish> list = dishService.list(wrapper);
+        return R.success(list);
     }
 
 }
