@@ -44,8 +44,71 @@ Simply conclude operation and deployment on linux system
 `echo 'LANG="en_US.UTF-8"' >> /etc/profile`  
 `source /etc/profile`
 
-
-
 ## Software installation
-
+### Installation methods
+#### Binary release 
+- download a pre-compiled binary release of the software from the developer's website
+- extract the files and run the application
+#### rpm
+- RPM packages are pre-compiled and include information about dependencies required by the software.
+- may encounter issues if you can't resolve the dependencies required by the software
+#### yum
+- Yum is capable of automatically resolving dependencies
+#### source code compile
+- download the source code for the software and compiling it on your own system
+### Install JDK
+- Use tools like winSCP to upload tar tile to the remote
+- `tar -zvxf jdk.tar.gz -C /usr/local`
+### Install Tomcat
+- `tar -zvxf tomcat.tar.gz -C /usr/local`
+- go to bin and use `sh startup.sh` to start tomcat service
+- Firewall: firewall is running, so we can't access 8080 port
+  - turn of firewall: `systemctl disable firewalld`
+  - open port: `firewall-cmd --zone=public --add-port=8080/tcp --permanent`
+  - take effect: `firewall-cmd --reload`
+  - show opened port: `firewall-cmd --zone=public --list-ports`
+### Install MySQL 8.0.33
+- Download rpm-bundle.tar and extract to 6 rpm files
+  - `rpm -ivh mysql-community-common`
+  - `rpm -ivh mysql-community-libs`
+  - `rpm -ivh mysql-community-devel`
+  - `rpm -ivh mysql-community-libs-compat`
+  - `rpm -ivh mysql-community-client`
+  - `yum install net-tools` if says missing net-tools
+  - `rpm -ivh mysql-community-server`
+- Run mysql service
+  - `systemctl start mysqld` 
+  - `systemctl status mysqld`
+  - `systemctl enable mysqld` start at boot
+- Installing mysql will generate a temporary password
+  - `mysql -u root -p` and enter password
+  - use following statements to configure
+    - `set global validate_password.length=4;` 
+    - `set global validate_password.policy=LOW;`
+    - `ALTER USER 'root'@'localhost' IDENTIFIED BY 'root';`
+  - grant access
+    - `CREATE USER 'root'@'%' IDENTIFIED BY 'root@1234';`
+    - `GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;`
+    - `flush privileges`
 ## Project Deployment
+### Manually Deployment
+- package project with maven and upload to server
+- run `java -jar project.jar`
+#### run at background
+- `nohup Command [Arg ...] [&]`: exit terminal won't hang up the program
+- `Command` command to execute
+- `Arg` set arguments
+- `&`: run program at background
+-  `nohup java -jar project.jar &> project.log &` run project in background and put log in file
+#### kill the program
+`ps -ef | grep 'java -jar'`
+`kill -9 35685`
+### Shell Script
+- we developed project and push to remote repository
+- then we connect server and pull the newest project and use shell script to compile, package, start it.
+- We have to 
+  - Install Git
+  - Install Maven
+  - Write shell
+  - grant privilege to run shell
+  - execute shell script
