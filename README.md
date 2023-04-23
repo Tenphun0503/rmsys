@@ -46,8 +46,6 @@ and perform of OOP, AOP, and MVC concept into real world problem.
 
 ---
 ## Conclusion
-
-## Conclusion
 Perk
 - used lombok to print log in case of better maintenance
 - Wrote detailed development documentation
