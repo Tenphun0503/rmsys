@@ -112,3 +112,7 @@ Simply conclude operation and deployment on linux system
   - Write shell
   - grant privilege to run shell
   - execute shell script
+- Grant other user access
+  - `-r--r--r--`: FileType `-`or`d` Owner `rwx` Group `rwx` OtherUsers `rwx`
+  - `r` read `w` write `x` execute
+  - we can use `chmod nnn` to grant access. such as `chmod 777 file`
