@@ -9,9 +9,8 @@ and perform of OOP, AOP, and MVC concept into real world problem.
     - **[Table of Contents](#table-of-contents)**
     - **[Technologies Used](#technologies-used)**
     - **[Getting Started](#getting-started)**
-    - **[Test]()**
-    - **[Contributing]()**
-    - **[Contact]()**
+    - **[Project Deployment](#project-deployment)**
+    - **[Conclusion](#Conclusion)**
 
 ---
 ## Technologies Used
@@ -30,7 +29,6 @@ and perform of OOP, AOP, and MVC concept into real world problem.
 - Version Control Tool
   - Git&GitHub
 
-
 ---
 ## Getting Started
 1. DataBase Building
@@ -39,14 +37,14 @@ and perform of OOP, AOP, and MVC concept into real world problem.
    - View all development records: [BackEndDev.md](Note/1_BackEndDev.md)
 4. MobileEnd Development
    - View all development records: [MobileEndDev.md](Note/2_MobileEndDev.md)
-
+   - 
 ---
 ## Project Deployment
 1. [Linux](Note/3_Linux.md)
 
 ---
 ## Conclusion
-Perk
+Perks and Problems
 - used lombok to print log in case of better maintenance
 - Wrote detailed development documentation
   Problem-Solution
