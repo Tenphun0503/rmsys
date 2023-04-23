@@ -44,3 +44,17 @@ and perform of OOP, AOP, and MVC concept into real world problem.
 ## Project Deployment
 1. [Linux](Note/3_Linux.md)
 
+---
+## Conclusion
+
+## Conclusion
+Perk
+- used lombok to print log in case of better maintenance
+- Wrote detailed development documentation
+  Problem-Solution
+- 19 length long data loss precision when it is sent to frontend
+  - Use a self-defined **objectMapper** and put it into spring mvc message converters.
+- Trying to use **metaObjectHandler** to autofill filed like createUser createTime, but it doesn't provide way to get current session
+  - Use **ThreadLocal** to save current user of the session since each transaction(doFilter->update->updateFill) is happened in one thread
+- packaged and deployed project on a linux(CentOS8) service
+
