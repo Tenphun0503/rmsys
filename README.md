@@ -3,6 +3,10 @@ A restaurant management system (RSM) based on SpringBoot + SSM.
 This project is a practice of learning SpringBoot, SSM
 and perform of OOP, AOP, and MVC concept into real world problem.
 
+<div style="text-align: center;">
+  <img src="dishes.png" alt="dishes" width="1280px" height="580px">
+</div>
+
 ---
 ## Table of Contents
 - **[Restaurant Management System](#restaurant-management-system)**
@@ -37,10 +41,11 @@ and perform of OOP, AOP, and MVC concept into real world problem.
    - View all development records: [BackEndDev.md](Note/1_BackEndDev.md)
 4. MobileEnd Development
    - View all development records: [MobileEndDev.md](Note/2_MobileEndDev.md)
-   - 
+
 ---
 ## Project Deployment
 1. [Linux](Note/3_Linux.md)
+2. use `http://localhost:8080/backend/page/login/login.html` to login
 
 ---
 ## Conclusion

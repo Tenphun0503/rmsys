@@ -18,7 +18,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/common")
 public class CommonController {
-    @Value("${rms.pathL}")
+    @Value("${rms.path}")
     private String basePath;
 
     /**
