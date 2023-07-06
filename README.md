@@ -1,6 +1,6 @@
 # Restaurant Management System
-A restaurant management system (RSM) based on SpringBoot + SSM.  
-This project is a practice of learning SpringBoot, SSM
+A restaurant management system (RSM) based on SpringBoot + MyBatis-Plus + MySQL.  
+This project is a practice of learning web application development
 and perform of OOP, AOP, and MVC concept into real world problem.
 
 <div style="text-align: center;">
