@@ -4,7 +4,7 @@ This project is a practice of learning SpringBoot, SSM
 and perform of OOP, AOP, and MVC concept into real world problem.
 
 <div style="text-align: center;">
-  <img src="dishes.png" alt="dishes" width="1280px" height="580px">
+  <img src="dishes.png" alt="dishes" width="800px" height="350px">
 </div>
 
 ---
